@@ -7,20 +7,17 @@ from launch_ros.actions import Node
 import xacro
 
 def generate_launch_description():
-    # Check if we're told to use sim time
+    # Définissez ici les configurations de votre lancement
     use_sim_time = LaunchConfiguration('use_sim_time')
 
-    # Process the URDF file
-    pkg_path = os.path.join(get_package_share_directory('articubot_one'))
+    # Chemin vers le fichier xacro
+    pkg_path = get_package_share_directory('articubot_one')
     xacro_file = os.path.join(pkg_path, 'description', 'robot.urdf.xacro')
-    
-    # Ensure the xacro file exists
-    if not os.path.isfile(xacro_file):
-        raise FileNotFoundError(f"Xacro file not found: {xacro_file}")
 
+    # Traitement du fichier xacro
     robot_description_config = xacro.process_file(xacro_file)
-    
-    # Create a robot_state_publisher node
+
+    # Création du nœud robot_state_publisher
     params = {'robot_description': robot_description_config.toxml(), 'use_sim_time': use_sim_time}
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -29,7 +26,7 @@ def generate_launch_description():
         parameters=[params]
     )
 
-    # Launch!
+    # Retourne la description du lancement
     return LaunchDescription([
         DeclareLaunchArgument(
             'use_sim_time',
@@ -38,3 +35,8 @@ def generate_launch_description():
         ),
         node_robot_state_publisher
     ])
+
+if __name__ == '__main__':
+    generate_launch_description()
+
+
