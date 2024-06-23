@@ -88,6 +88,28 @@
     </visual>
   </link>
 
+<!-- Définition du joint entre chassis et la roulette(caster_wheel) -->
+  <joint name="caster_wheel_joint" type="continuous">
+    <parent link="chassis"/>
+    <child link="caster_wheel"/>
+    <origin xyz="0.24 0 0" rpy="${pi/2} 0 0"/>
+    
+  </joint>
+  
+  <!-- Définition du lien la roulette(caster_wheel) -->
+  <link name="caster_wheel">
+    <visual>
+     
+      <geometry>
+        <sphere radius="0.05" />
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+
+
+
 </robot>
 
 
